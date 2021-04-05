@@ -1,32 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TestingScript;
 
-public class InventoryScript : MonoBehaviour
-{ 
+public class Inventory: MonoBehaviour
+{
     public bool inventoryOpen = false;
-	public bool inventoryRequestable = true;
-	public GameObject inventory;
-	
-	
-	void Start()
-	{
-		
-	}
-	
-	  void Update()
-	{
-		
+    public bool inventoryRequestable = true;
+    public GameObject inventory;
+    public GameObject adventureManager;
+    private TestingScript irgendwas;
+    public ArrayList items;
+
+    ArrayList gObjects = new ArrayList();
+    const int xTotal = 7;
+    const int yTotal = 6;
+    const int width = 12;
+    const int height = 4;
+    const int xBuffer = 5;
+    const int yBuffer = 8;
+
+    void Start()
+    {
+        irgendwas = adventureManager.GetComponent<TestingScript>();
+      
+        for (int i = 0; i < xTotal * yTotal; i++)
+        {
+            GameObject g = new GameObject(i.ToString());
+            g.AddComponent<SpriteRenderer>();
+            gObjects.Add(g);
+        }
+    }
+
+    void Update()
+    {
+        items = irgendwas.items;
+        inventory.SetActive(inventoryOpen);
         //wird I gedrückt? ist das inventar offen?
-	    if(Input.GetKeyDown(KeyCode.I) && inventoryRequestable){
-			print("open");
-			inventoryRequestable = false;
-			inventoryOpen = !inventoryOpen;
-		}
-		if(Input.GetKeyUp(KeyCode.I)){
-		    inventoryRequestable = true;
-		}
-		
-	}
+        if (Input.GetKeyDown(KeyCode.I) && inventoryRequestable)
+        {
+            print("open");
+            inventoryRequestable = false;
+            inventoryOpen = !inventoryOpen;
+        }
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            inventoryRequestable = true;
+        }
+        
+      
+
+        
+
+        for (int i = 0; i < yTotal; i++)
+        {
+            for (int j = 0; j < xTotal; j++)
+            {
+                GameObject g = (GameObject) gObjects[(i * yTotal) + xTotal];
+                g.GetComponent<SpriteRenderer>().sprite = ((GameObject) items [i * yTotal + xTotal]).GetComponent<SpriteRenderer>().sprite;
+                int xPosition = (j * width) + xBuffer;
+                int yPosition = (i * height) + yBuffer;
+               if (j != 0)
+                {
+                    xPosition += xBuffer;
+                }
+                if (i != 0)
+                {
+                    yPosition += yBuffer;
+                }
+
+                g.transform.position = new Vector2(xPosition, yPosition);
+            }
+        }
+
+
+    }
 }
