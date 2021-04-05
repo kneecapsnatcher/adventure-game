@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TestingScript;
+
+public class InventoryScript : MonoBehaviour
+{ 
+    public bool inventoryOpen = false;
+	public bool inventoryRequestable = true;
+	public GameObject inventory;
+	
+	
+	void Start()
+	{
+		
+	}
+	
+	  void Update()
+	{
+		
+        //wird I gedrückt? ist das inventar offen?
+	    if(Input.GetKeyDown(KeyCode.I) && inventoryRequestable){
+			print("open");
+			inventoryRequestable = false;
+			inventoryOpen = !inventoryOpen;
+		}
+		if(Input.GetKeyUp(KeyCode.I)){
+		    inventoryRequestable = true;
+		}
+		
+	}
+}
