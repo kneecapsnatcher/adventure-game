@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +12,8 @@ public class TestingScript : MonoBehaviour
 	public Vector2 targetPos;
 	public float speed;
 	public bool isMoving;
-	
-	
+
+	public ArrayList items = new ArrayList();
 	public int stones = 0;
 	public bool apple = false;
 	public int appleNumber;
@@ -72,13 +72,15 @@ public class TestingScript : MonoBehaviour
 				//Überprüfe ob Sprite Flip notwendig ist
 				CheckSpriteFlip();
 				}
-				else if(hit.collider.gameObject.tag == "Book")
+				else if(hit.collider.gameObject.tag == "Item")
 				{
-					
-					print("Buch angeklickt");
+
+					items.Add(hit.collider.gameObject);
+					print(hit.collider.gameObject.name);
+					hit.collider.gameObject.SetActive(false);
 					
 				}
-				else if(hit.collider.gameObject.tag == "Apple")
+				/*else if(hit.collider.gameObject.tag == "Apple")
 				{
 					//Apfel erkannt
 					//Apfel wird deaktiviert
@@ -97,7 +99,7 @@ public class TestingScript : MonoBehaviour
 					ruby = true;
 					stones = stones + 1;
 					rubyNumber = stones;
-				}
+				}*/
 			}
 			else
 			{
